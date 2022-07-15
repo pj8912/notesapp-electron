@@ -1,0 +1,32 @@
+<%- include('partials/header'); %>
+<%- include('partials/navbar'); %>
+
+	  <div class="container">
+		         
+		  <div class="card card-body  mt-5 m-auto col-md-6" align="center">
+			  
+		  
+			  <form method="post" action="/createbook">
+			  
+				  <div class="mb-2">
+			 
+					  <input class="form-control" name="bname" type="text" placeholder="Create Book Name">
+			  
+				  </div>
+			 
+			  
+			  <div class="mb-2">
+				  <textarea rows="5" name="desc" class="form-control" placeholder="Description"></textarea>
+			  </div>
+			  <div class="d-gird gap-3">
+				  <button type="submit" name="ubtn" class="btn btn-primary">Create</button>
+			  </div>
+
+		  
+			  </form>
+
+	  	</div>
+	  
+	  </div>
+    
+<%- include('partials/footer'); %>
