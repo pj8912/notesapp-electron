@@ -1,9 +1,9 @@
 # notesapp-electron
 notesapp application  built with electron 
 
-#install
+# install
 <code>npm install</code>
 
-#start application
+# start application
 <code> npm start </code>
 
