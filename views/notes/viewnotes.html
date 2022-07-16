@@ -1,0 +1,27 @@
+<% var rootPath = '../'; %>
+
+
+<%- include(rootPath +'partials/header'); %>
+	  
+  <%- include(rootPath +'partials/navbar'); %>
+
+
+  	<div class="container">
+	
+		<% if(notes.length < 1) {%>
+			<div class="card card-body text-center mt-5 ">
+				No Notes Created<br>
+				
+				<a href="/createnotes/<%= b_id %>" style="width:fit-content;margin:0 auto;" class="btn btn-primary rounded-5 text-center">create notes</a>
+			</div>
+		
+		<%} else{ %>
+			Notes Available
+		<% } %>
+	</div>
+
+
+
+ <%- include(rootPath + 'partials/footer'); %>
+
+ 

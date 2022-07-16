@@ -5,6 +5,7 @@ app.on('ready', function(){
 	const mainWindow = new BrowserWindow({
 		width: 800,
 		height: 600,
+		autoHideMenuBar: true,
 		icon: __dirname + '/s.ico'
 
 

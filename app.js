@@ -25,6 +25,8 @@ app.get('/create', (req, res)=>{
 })
 
 
+
+// ---view all books-----
 app.get('/viewbooks', (req, res)=>{
 
 	//get all books from 'notebooks'
@@ -45,7 +47,7 @@ app.get('/viewbooks', (req, res)=>{
 		rows.forEach((row)=>{
 		
 			//console.log(row.name)
-			notebooks.push([row.name, row.desc])
+			notebooks.push([row.name, row.desc, row.nb_id])
 			
 
 		})
@@ -55,12 +57,13 @@ app.get('/viewbooks', (req, res)=>{
 
 	})
 	
-	//res.render('notebooks.html', {notebooks : notebooks});
 })
 
+
+// ---create book----
 app.post('/createbook', (req, res)=>{
 	let book = req.body.bname;
-	let desc = req.body.desc;
+	let desc = req.body.desc; // book, desc from 'form'
 	console.log(book + ":" + desc);
 	//insert into books table
 	 var newdb = new sqlite3.Database('notesapp.db', (err) => {
@@ -84,6 +87,103 @@ app.post('/createbook', (req, res)=>{
 	
 });
 
+
+//database connection
+function db_conn(){
+	 var newdb = new sqlite3.Database('notesapp.db', (err) => {
+                 if (err) {
+                         console.log("Getting error " + err);
+                         exit(1);
+
+                 }
+         });
+
+	return newdb
+}
+
+
+
+//----- createnotes page ------
+app.get('/createnotes/:id', (req, res)=>{
+	
+	db = db_conn(); //database connection
+	var sql = `SELECT * FROM notes WHERE book_id = ?`; //query
+	var bid = req.params.id //book id
+	const notes = new Array();
+	
+	db.all(sql, [bid], (err, rows)=>{
+		if(err) console.error(err.message)
+
+		rows.forEach((row)=>{
+			notes.push([row.n_id, row.note_name, row.book_id, row.notes])
+		})
+		let book_name;
+		let sql2 = `SELECT * FROM notebooks WHERE nb_id = ?`;
+		db.all(sql2, [bid], (err,rows)=>{
+			if(err) console.log('err')
+			rows.forEach((row)=>{
+				book_name = row.name;
+			})
+		
+			//render after second query
+			res.render('notes/createnotes.html', {notes: notes, bname:book_name})
+
+		})
+	})
+	
+})
+
+
+//---- createnote----
+/**
+app.get('/createnote', (res, res)=>{
+	
+	db = db_conn();
+	
+	let notes_val = req.body.notes;
+        let note_id  = req.body.id;
+	console.log(notes + ":" + note_id);
+	
+	var sql = `UPDATE notes SET notes = ? WHERE n_id = ? `;
+	db.all(sql, [notes_val, note_id],  (err) => {
+                
+		if (err) console.error(err.message)
+		console.log(`Note created successfully!!`)
+	})
+	
+	let bid;
+	var sql2 = `SELECT book_id FROM notes WHERE n_id = ?`;
+	db.all(sql, [note_id], (err, rows)=>{
+		if(err) console.error(err.message)
+		row.forEach((row)=>{
+			bid = row.book_id	
+		})
+		res.redirect('/createnotes/'+bid)
+	})
+})
+**/
+
+
+
+//----- view notes -------
+app.get('/viewnotes/:id', (req, res)=>{
+	
+	db = db_conn(); //database connection
+	var sql = `SELECT * FROM notes WHERE book_id = ?`; //query
+	var bid = req.params.id //book id
+	var notes = new Array();
+
+	db.all(sql, [bid], (err, rows)=>{
+                if(err) console.error(err.message)
+		 rows.forEach((row)=>{
+		 	notes.push([row.n_id, row.note_name, row.book_id, row.notes ])
+		 })
+
+		res.render('notes/viewnotes.html', {notes:notes, b_id:bid})
+	})
+
+
+})
 
 
 
