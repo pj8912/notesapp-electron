@@ -87,6 +87,14 @@ app.post('/createbook', (req, res)=>{
 	
 });
 
+app.get('/deletebook:id', (req, res)=>{
+	let bid = req.params.id
+	var sql = `DELETE FROM  books WHERE  nb_id = `
+
+	db = db_conn()
+	
+})
+
 
 //database connection
 function db_conn(){
