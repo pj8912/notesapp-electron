@@ -26,17 +26,17 @@
         color: white;
         font-size: 16px;
         border: none;
-        padding: 10px;
         cursor: pointer;
+	background: white;
     }
     
     .dropbtn:hover,
     .dropbtn:focus {
-        background-color: inherit;
+        background-color:#eee;
     }
     
     .dropdown {
-        position: relative;
+        /**position: relative; **/
         display: inline-block;
     }
     
@@ -57,9 +57,6 @@
         display: block;
     }
     
-    .dropdown a:hover {
-        background-color: #ddd;
-    }
     
     .show {
         display: block;
